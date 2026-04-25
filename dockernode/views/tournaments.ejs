@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournaments in <%= state %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>🏆 Sports Tournament Hub</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Tournaments in <%= state %></h2>
+        
+        <% sports.forEach(sport => { %>
+        <div class="sport-section">
+            <h3 class="sport-title"><%= sport %></h3>
+            <div class="tournament-grid">
+                <% tournaments[sport].forEach(tournament => { %>
+                <div class="tournament-card">
+                    <h4><%= tournament.name %></h4>
+                    <p class="venue">📍 <%= tournament.venue %></p>
+                    <p class="date">📅 <%= tournament.date %></p>
+                    <p class="prize">💰 Prize: <%= tournament.prize %></p>
+                    <p class="team-size">👥 Team Size: <%= tournament.teamSize %> players</p>
+                    <p class="fee">💵 Registration: <%= tournament.registrationFee %></p>
+                    <a href="/register/<%= state %>/<%= sport %>/<%= tournament.id %>" class="btn-register">
+                        Register Now
+                    </a>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Sports Tournament Hub. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register for <%= tournament.name %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>🏆 Sports Tournament Hub</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="registration-container">
+            <h2>Team Registration</h2>
+            <div class="tournament-info">
+                <h3><%= tournament.name %></h3>
+                <p><strong>State:</strong> <%= state %></p>
+                <p><strong>Sport:</strong> <%= sport %></p>
+                <p><strong>Venue:</strong> <%= tournament.venue %></p>
+                <p><strong>Date:</strong> <%= tournament.date %></p>
+                <p><strong>Team Size:</strong> <%= tournament.teamSize %> players</p>
+                <p><strong>Registration Fee:</strong> <%= tournament.registrationFee %></p>
+            </div>
+
+            <form action="/submit-registration" method="POST" class="registration-form">
+                <input type="hidden" name="state" value="<%= state %>">
+                <input type="hidden" name="sport" value="<%= sport %>">
+                <input type="hidden" name="tournamentName" value="<%= tournament.name %>">
+                <input type="hidden" name="tournamentDate" value="<%= tournament.date %>">
+                <input type="hidden" name="contactEmail" value="<%= tournament.contact %>">
+                <input type="hidden" name="registrationFee" value="<%= tournament.registrationFee %>">
+
+                <div class="form-group">
+                    <label for="teamName">Team Name *</label>
+                    <input type="text" id="teamName" name="teamName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="captainName">Captain's Name *</label>
+                    <input type="text" id="captainName" name="captainName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="players">Number of Players *</label>
+                    <input type="number" id="players" name="players" min="1" max="<%= tournament.teamSize %>" 
+                           value="<%= tournament.teamSize %>" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Register Team</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Sports Tournament Hub. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

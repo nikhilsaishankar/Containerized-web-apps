@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Home - State-wise Jobs{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Find Your Dream Job</h1>
+    <p>IT and Non-IT positions across all states in India</p>
+</div>
+
+<div class="states-grid">
+    <h2>Select a State to View Jobs</h2>
+    <div class="state-cards">
+        {% for state in states %}
+        <div class="state-card">
+            <h3>{{ state }}</h3>
+            <a href="{{ url_for('jobs', state=state) }}" class="btn">View Jobs</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

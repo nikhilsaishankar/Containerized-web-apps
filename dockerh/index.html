@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AureusVista | Precious Metals Live</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0a0e1a 0%, #020617 100%);
+            min-height: 100vh;
+            padding: 1.8rem 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* animated orbs */
+        body::before {
+            content: '';
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(212,175,55,0.15), transparent 70%);
+            top: -150px;
+            right: -100px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(210,180,140,0.08), transparent 70%);
+            bottom: -200px;
+            left: -150px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Elegant header without unwanted text */
+        .luxury-header {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+        .brand-icon {
+            font-size: 2.8rem;
+            filter: drop-shadow(0 0 8px rgba(230, 180, 70, 0.6));
+        }
+        .brand-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            background: linear-gradient(125deg, #F3E5AB, #E6B422, #D4AF37);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            text-shadow: 0 0 15px rgba(212,175,55,0.3);
+        }
+        .brand-sub {
+            font-size: 0.85rem;
+            background: rgba(255,215,0,0.12);
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            color: #e9c468;
+            font-weight: 400;
+            backdrop-filter: blur(4px);
+        }
+
+        /* country selector — premium glass */
+        .country-pavilion {
+            background: rgba(12, 20, 35, 0.65);
+            backdrop-filter: blur(16px);
+            border-radius: 70px;
+            padding: 0.5rem;
+            margin-bottom: 2.6rem;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+        }
+        .country-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.55rem;
+        }
+        .country-chip {
+            background: rgba(25, 35, 55, 0.7);
+            border: none;
+            padding: 0.65rem 1.4rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #cfdfed;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .country-chip span:first-child {
+            font-size: 1.2rem;
+        }
+        .country-chip.active {
+            background: linear-gradient(115deg, #C9A43D, #E3BC6A);
+            color: #0a0e1a;
+            border-color: #FFE6A3;
+            box-shadow: 0 8px 18px rgba(212, 175, 55, 0.45);
+            font-weight: 700;
+            text-shadow: 0 0 2px rgba(255,245,180,0.8);
+        }
+        .country-chip:hover:not(.active) {
+            background: rgba(50, 70, 110, 0.9);
+            border-color: #dbb44b;
+            transform: translateY(-2px);
+        }
+
+        /* Dual card masterpiece */
+        .metals-podium {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin: 1.8rem 0 2.2rem;
+        }
+        .metal-mastercard {
+            flex: 1;
+            min-width: 290px;
+            background: radial-gradient(ellipse at 20% 30%, rgba(25, 35, 55, 0.9), rgba(8, 14, 26, 0.95));
+            backdrop-filter: blur(12px);
+            border-radius: 2.5rem;
+            padding: 2rem 1.8rem;
+            text-align: center;
+            box-shadow: 0 30px 40px -18px black;
+            border: 1px solid rgba(230, 200, 100, 0.35);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .metal-mastercard::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle, rgba(255,215,0,0.08), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .metal-mastercard:hover::before {
+            opacity: 1;
+        }
+        .metal-mastercard:hover {
+            transform: translateY(-8px);
+            border-color: #e9bc3b;
+            box-shadow: 0 35px 45px -12px #000000aa;
+        }
+        .metal-icon-gold {
+            font-size: 4rem;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+            background: linear-gradient(135deg, #F7D975, #C9A03D);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .metal-icon-silver {
+            font-size: 4rem;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+            background: linear-gradient(135deg, #E3E9F2, #BAC8D9);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .metal-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0.6rem 0 0.2rem;
+            letter-spacing: 0px;
+        }
+        .metal-subunit {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: #b9a166;
+            margin-bottom: 1.1rem;
+        }
+        .price-digital {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #FFF6DF, #FFE2A4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 0.5rem 0 0.2rem;
+            letter-spacing: 1px;
+        }
+        .currency-badge {
+            font-size: 0.95rem;
+            font-weight: 500;
+            background: rgba(0,0,0,0.45);
+            display: inline-block;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            color: #c7c9ce;
+        }
+        .trend-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.35rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        .trend-up {
+            color: #bef264;
+        }
+        .trend-down {
+            color: #fda4af;
+        }
+        .live-flare {
+            display: inline-block;
+            background: linear-gradient(95deg, #b8821e30, #e6b42230);
+            border-radius: 60px;
+            padding: 0.2rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #fad974;
+            margin-top: 1rem;
+            backdrop-filter: blur(2px);
+            border: 0.5px solid rgba(230, 180, 70, 0.5);
+        }
+
+        /* stats footer */
+        .insight-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            padding: 0.8rem 1.8rem;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+        .live-time {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #cbd5e6;
+            font-weight: 500;
+        }
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #f5cb5c;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #f5cb5c;
+            animation: pulse 1.4s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.5; transform: scale(0.8);}
+            100% { opacity: 1; transform: scale(1.2);}
+        }
+        .discreet-note {
+            color: #7c8db0;
+            font-size: 0.75rem;
+        }
+        footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            font-size: 0.7rem;
+            color: #5f6f92;
+            letter-spacing: 0.3px;
+        }
+
+        /* shimmer animation for update */
+        @keyframes shimmerGold {
+            0% { text-shadow: 0 0 0 #ffd966; opacity: 0.9; }
+            50% { text-shadow: 0 0 5px #ffbf40; opacity: 1; }
+            100% { text-shadow: 0 0 0 #ffd966; opacity: 0.9; }
+        }
+        .rate-updated {
+            animation: shimmerGold 0.4s ease-out;
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 1rem;
+            }
+            .brand-title {
+                font-size: 1.8rem;
+            }
+            .price-digital {
+                font-size: 2rem;
+            }
+            .country-chip {
+                padding: 0.45rem 1rem;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <!-- refined header without any "Here is..." text -->
+    <div class="luxury-header">
+        <span class="brand-icon">🏛️</span>
+        <span class="brand-title">AUREUS VISTA</span>
+        <span class="brand-sub">LIVE BULLION</span>
+    </div>
+
+    <div class="country-pavilion">
+        <div class="country-grid" id="countryGrid">
+            <!-- country chips injected via js -->
+        </div>
+    </div>
+
+    <div class="metals-podium">
+        <!-- GOLD CARD -->
+        <div class="metal-mastercard" id="goldMaster">
+            <div class="metal-icon-gold">⚜️</div>
+            <div class="metal-name">GOLD</div>
+            <div class="metal-subunit">FINE 24K · PER OUNCE</div>
+            <div class="price-digital" id="goldPriceValue">—</div>
+            <div class="currency-badge" id="goldCurrLabel">USD</div>
+            <div class="trend-indicator" id="goldTrendBox">
+                <span>↻ loading</span>
+            </div>
+            <div class="live-flare">🔴 LIVE SPOT</div>
+        </div>
+
+        <!-- SILVER CARD -->
+        <div class="metal-mastercard" id="silverMaster">
+            <div class="metal-icon-silver">🔘</div>
+            <div class="metal-name">SILVER</div>
+            <div class="metal-subunit">FINE .999 · PER OUNCE</div>
+            <div class="price-digital" id="silverPriceValue">—</div>
+            <div class="currency-badge" id="silverCurrLabel">USD</div>
+            <div class="trend-indicator" id="silverTrendBox">
+                <span>↻ loading</span>
+            </div>
+            <div class="live-flare">📈 REAL-TIME</div>
+        </div>
+    </div>
+
+    <div class="insight-footer">
+        <div class="live-time">
+            <span class="pulse-dot"></span>
+            <span id="globalTimestamp">fetching latest data...</span>
+        </div>
+        <div class="discreet-note">💱 Exchange rates updated dynamically · country conversion applied</div>
+        <div class="discreet-note">✨ double tap any card to refresh</div>
+    </div>
+    <footer>© AUREUS VISTA — market indicative rates with real-time simulation</footer>
+</div>
+
+<script>
+    // -----------------------------------------------------------
+    // PREMIUM METAL RATES ENGINE: Country wise Gold & Silver
+    // Realistic dynamic rates (USD base) + FX conversion.
+    // Elegant, responsive, user-friendly.
+    // -----------------------------------------------------------
+    
+    // ----- COUNTRIES (with currency & latest forex multipliers)
+    const countriesList = [
+        { code: "US", name: "United States", currency: "USD", symbol: "$", flag: "🇺🇸", fxRate: 1.00 },
+        { code: "IN", name: "India", currency: "INR", symbol: "₹", flag: "🇮🇳", fxRate: 83.40 },
+        { code: "GB", name: "United Kingdom", currency: "GBP", symbol: "£", flag: "🇬🇧", fxRate: 0.79 },
+        { code: "EU", name: "Eurozone", currency: "EUR", symbol: "€", flag: "🇪🇺", fxRate: 0.925 },
+        { code: "AE", name: "UAE", currency: "AED", symbol: "د.إ", flag: "🇦🇪", fxRate: 3.6725 },
+        { code: "SA", name: "Saudi Arabia", currency: "SAR", symbol: "﷼", flag: "🇸🇦", fxRate: 3.751 },
+        { code: "SG", name: "Singapore", currency: "SGD", symbol: "S$", flag: "🇸🇬", fxRate: 1.345 },
+        { code: "CH", name: "Switzerland", currency: "CHF", symbol: "₣", flag: "🇨🇭", fxRate: 0.882 },
+        { code: "AU", name: "Australia", currency: "AUD", symbol: "A$", flag: "🇦🇺", fxRate: 1.525 },
+        { code: "CA", name: "Canada", currency: "CAD", symbol: "C$", flag: "🇨🇦", fxRate: 1.378 },
+        { code: "JP", name: "Japan", currency: "JPY", symbol: "¥", flag: "🇯🇵", fxRate: 150.2 },
+        { code: "TR", name: "Turkey", currency: "TRY", symbol: "₺", flag: "🇹🇷", fxRate: 34.20 }
+    ];
+    
+    // Base USD metal prices (realistic ranges)
+    let goldUSD = 1983.60;
+    let silverUSD = 24.92;
+    let prevGoldUSD = goldUSD;
+    let prevSilverUSD = silverUSD;
+    
+    let currentCountry = countriesList[0];   // default US
+    
+    // Helper functions
+    function formatNumber(value, decimals = 2) {
+        return value.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    }
+    
+    // Update metal prices with slight realistic volatility (live simulation)
+    function driftMetalPrices() {
+        // preserve previous
+        prevGoldUSD = goldUSD;
+        prevSilverUSD = silverUSD;
+        
+        // Gold drift: between -0.5% and +0.6% ; Silver -0.7% to +0.8%
+        const goldShift = (Math.random() * 1.1 - 0.5) / 100;
+        const silverShift = (Math.random() * 1.5 - 0.7) / 100;
+        
+        let newGold = goldUSD * (1 + goldShift);
+        let newSilver = silverUSD * (1 + silverShift);
+        
+        // bounds check
+        newGold = Math.min(2150, Math.max(1875, newGold));
+        newSilver = Math.min(29.8, Math.max(22.6, newSilver));
+        
+        goldUSD = newGold;
+        silverUSD = newSilver;
+    }
+    
+    // get converted rates for active country
+    function getConvertedValues() {
+        const multiplier = currentCountry.fxRate;
+        return {
+            goldConverted: goldUSD * multiplier,
+            silverConverted: silverUSD * multiplier
+        };
+    }
+    
+    // calculate change percentage based on USD previous drift (in base currency gives consistent trend)
+    function getChangePct(prev, current) {
+        if (prev === 0) return 0;
+        return ((current - prev) / prev) * 100;
+    }
+    
+    // update entire UI with fresh numbers & styling
+    function renderDashboard() {
+        const { goldConverted, silverConverted } = getConvertedValues();
+        const currencySym = currentCountry.symbol;
+        const currencyCode = currentCountry.currency;
+        
+        // update gold display
+        const goldFormatted = `${currencySym}${formatNumber(goldConverted, 2)}`;
+        document.getElementById('goldPriceValue').innerText = goldFormatted;
+        document.getElementById('goldCurrLabel').innerHTML = `${currencyCode}/oz`;
+        
+        // silver display (3 decimals for silver)
+        const silverFormatted = `${currencySym}${formatNumber(silverConverted, 3)}`;
+        document.getElementById('silverPriceValue').innerText = silverFormatted;
+        document.getElementById('silverCurrLabel').innerHTML = `${currencyCode}/oz`;
+        
+        // gold change
+        const goldChange = getChangePct(prevGoldUSD, goldUSD);
+        const goldTrendBox = document.getElementById('goldTrendBox');
+        if (goldChange >= 0) {
+            goldTrendBox.innerHTML = `<span>📈</span><span class="trend-up">+${goldChange.toFixed(2)}%</span>`;
+        } else {
+            goldTrendBox.innerHTML = `<span>📉</span><span class="trend-down">${goldChange.toFixed(2)}%</span>`;
+        }
+        
+        // silver change
+        const silverChange = getChangePct(prevSilverUSD, silverUSD);
+        const silverTrendBox = document.getElementById('silverTrendBox');
+        if (silverChange >= 0) {
+            silverTrendBox.innerHTML = `<span>📈</span><span class="trend-up">+${silverChange.toFixed(2)}%</span>`;
+        } else {
+            silverTrendBox.innerHTML = `<span>📉</span><span class="trend-down">${silverChange.toFixed(2)}%</span>`;
+        }
+        
+        // timestamp and country info
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        document.getElementById('globalTimestamp').innerHTML = `🕘 ${timeStr} · ${currentCountry.name} (${currencyCode})`;
+        
+        // add shimmer effect on both cards
+        const goldCard = document.getElementById('goldMaster');
+        const silverCard = document.getElementById('silverMaster');
+        goldCard.classList.add('rate-updated');
+        silverCard.classList.add('rate-updated');
+        setTimeout(() => {
+            goldCard.classList.remove('rate-updated');
+            silverCard.classList.remove('rate-updated');
+        }, 500);
+    }
+    
+    // combined refresh (price drift + UI)
+    function fullRefresh() {
+        driftMetalPrices();
+        renderDashboard();
+    }
+    
+    // country change handler
+    function selectCountry(countryObj) {
+        if (currentCountry.code === countryObj.code) return;
+        currentCountry = countryObj;
+        rebuildCountryChips();
+        renderDashboard();   // keep same metal prices but new currency conversion
+        // glint animation on footer
+        const footerInfo = document.querySelector('.insight-footer');
+        footerInfo.style.transition = '0.2s';
+        footerInfo.style.borderColor = '#e9bc3b';
+        setTimeout(() => { footerInfo.style.borderColor = 'rgba(212, 175, 55, 0.25)'; }, 300);
+    }
+    
+    // create country buttons dynamically
+    function rebuildCountryChips() {
+        const container = document.getElementById('countryGrid');
+        container.innerHTML = '';
+        countriesList.forEach(country => {
+            const chip = document.createElement('button');
+            chip.className = 'country-chip';
+            if (currentCountry.code === country.code) chip.classList.add('active');
+            chip.innerHTML = `<span>${country.flag}</span><span>${country.name}</span>`;
+            chip.addEventListener('click', (e) => {
+                e.preventDefault();
+                selectCountry(country);
+            });
+            container.appendChild(chip);
+        });
+    }
+    
+    // manual refresh trigger by double-clicking on any metal card
+    function attachGestureRefresh() {
+        const goldDiv = document.getElementById('goldMaster');
+        const silverDiv = document.getElementById('silverMaster');
+        const refreshAction = () => {
+            fullRefresh();
+            const timeElement = document.getElementById('globalTimestamp');
+            timeElement.style.opacity = '0.8';
+            setTimeout(() => timeElement.style.opacity = '1', 150);
+        };
+        goldDiv.addEventListener('dblclick', refreshAction);
+        silverDiv.addEventListener('dblclick', refreshAction);
+    }
+    
+    // Live timer: auto update every 22 seconds (smooth)
+    let intervalRef = null;
+    function startLiveCycle() {
+        if (intervalRef) clearInterval(intervalRef);
+        intervalRef = setInterval(() => {
+            fullRefresh();
+        }, 22000);
+    }
+    
+    // initial randomization to avoid static first look
+    function initialVariance() {
+        goldUSD = 1986.40 + (Math.random() * 8 - 4);
+        silverUSD = 25.05 + (Math.random() * 0.65 - 0.32);
+        prevGoldUSD = goldUSD;
+        prevSilverUSD = silverUSD;
+    }
+    
+    // Initialize everything and make it glimmer
+    function initApp() {
+        initialVariance();
+        rebuildCountryChips();
+        renderDashboard();
+        startLiveCycle();
+        attachGestureRefresh();
+        // Extra small random drift after 3 sec to feel alive
+        setTimeout(() => {
+            fullRefresh();
+        }, 1200);
+    }
+    
+    initApp();
+</script>
+</body>
+</html>
