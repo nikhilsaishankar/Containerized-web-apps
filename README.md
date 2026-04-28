@@ -34,7 +34,7 @@ The projects are split into two categories:
 
 | Category | Projects | Purpose |
 |----------|----------|---------|
-| **Frontend** | `metalmatrix-webapp` (HTTPD), `careersportal-webapp-nginx` (Nginx) | Static web pages served by a web server |
+| **Frontend** | `metalmatrix-webapp` (HTTPD), `tourism-webapp-nginx` (Nginx) | Static web pages served by a web server |
 | **Backend** | `sportstournament-node` (Node.js + Express), `careersportal-python` (Python + Flask) | Dynamic applications with routes, views, and dependencies |
 
 ---
@@ -47,7 +47,7 @@ Docker_Deployment/
 │   ├── Dockerfile
 │   └── index.html
 │
-├── careersportal-webapp-nginx/      # Frontend — served via Nginx
+├── tourism-webapp-nginx/            # Frontend — served via Nginx
 │   ├── Dockerfile
 │   └── index.html
 │
@@ -134,11 +134,15 @@ docker run -itd --name metalmatrix-cont -p 6000:80 metalmatrix-img
 
 **Access the app:** open `http://localhost:6000` in a browser.
 
+**Preview:**
+
+![MetalMatrix HTTPD Web App](docs/images/frontend/metalmatrix-webapp-httpd.png)
+
 ### Nginx Deployment
 
-**Project:** `careersportal-webapp-nginx/`
+**Project:** `tourism-webapp-nginx/`
 
-Nginx serves static files from `/usr/share/nginx/html` by default, so our `index.html` is placed there.
+A state-wise travel guide and tourism packages page. Nginx serves static files from `/usr/share/nginx/html` by default, so our `index.html` is placed there.
 
 **Dockerfile:**
 
@@ -155,17 +159,21 @@ COPY index.html /usr/share/nginx/html
 **Build the image:**
 
 ```bash
-cd careersportal-webapp-nginx
-docker build -t careersportal-nginx-img .
+cd tourism-webapp-nginx
+docker build -t tourism-nginx-img .
 ```
 
 **Run the container:**
 
 ```bash
-docker run -itd --name careersportal-nginx-cont -p 7000:80 careersportal-nginx-img
+docker run -itd --name tourism-nginx-cont -p 7000:80 tourism-nginx-img
 ```
 
 **Access the app:** open `http://localhost:7000` in a browser.
+
+**Preview:**
+
+![Tourism Nginx Web App](docs/images/frontend/tourism-webapp-nginx.png)
 
 ---
 
@@ -208,7 +216,7 @@ sportstournament-node/
 
 ```dockerfile
 FROM node
-WORKDIR /workspace/nodeapplication
+WORKDIR workspace/nodeapplication
 COPY package.json .
 RUN npm install
 COPY . .
@@ -218,7 +226,7 @@ CMD ["node", "app.js"]
 | Instruction | Purpose |
 |-------------|---------|
 | `FROM node` | Uses the official Node.js base image |
-| `WORKDIR /workspace/nodeapplication` | Creates and switches to the working directory inside the container |
+| `WORKDIR workspace/nodeapplication` | Creates and switches to the working directory inside the container |
 | `COPY package.json .` | Copies only the dependency manifest first |
 | `RUN npm install` | Installs the Node.js dependencies |
 | `COPY . .` | Copies the rest of the project source |
@@ -233,6 +241,12 @@ docker run -itd --name sportstournament-cont -p 8080:3000 sportstournament-img
 ```
 
 > Replace `3000` with the actual port your `app.js` listens on if it differs.
+
+**Preview:**
+
+![Sports Tournament Node App](docs/images/backend/sportstournament-node.png)
+
+![Sports Tournament Node App — Registration View](docs/images/backend/sportstournament-node-2.png)
 
 ### Python Flask Application
 
@@ -267,6 +281,10 @@ cd careersportal-python
 docker build -t careersportal-python-img .
 docker run -itd --name careersportal-python-cont -p 5000:5000 careersportal-python-img
 ```
+
+**Preview:**
+
+![Careers Portal Python App](docs/images/backend/careersportal-python.png)
 
 ---
 
