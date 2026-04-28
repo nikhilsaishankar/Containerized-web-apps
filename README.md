@@ -1,4 +1,4 @@
-# Docker Deployment
+# Containerized-web-apps
 
 > A hands-on collection of containerized **frontend** and **backend** applications demonstrating how to package, build, and run real web apps using Docker.
 
