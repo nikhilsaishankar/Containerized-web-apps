@@ -129,10 +129,10 @@ docker build -t metalmatrix-img .
 **Run the container:**
 
 ```bash
-docker run -itd --name metalmatrix-cont -p 6000:80 metalmatrix-img
+docker run -itd --name metalmatrix-cont -p 1234:80 metalmatrix-img
 ```
 
-**Access the app:** open `http://localhost:6000` in a browser.
+**Access the app:** open `http://localhost:1234` in a browser.
 
 **Preview:**
 
@@ -166,10 +166,10 @@ docker build -t tourism-nginx-img .
 **Run the container:**
 
 ```bash
-docker run -itd --name tourism-nginx-cont -p 7000:80 tourism-nginx-img
+docker run -itd --name tourism-nginx-cont -p 7676:80 tourism-nginx-img
 ```
 
-**Access the app:** open `http://localhost:7000` in a browser.
+**Access the app:** open `http://localhost:7676` in a browser.
 
 **Preview:**
 
@@ -237,7 +237,7 @@ CMD ["node", "app.js"]
 ```bash
 cd sportstournament-node
 docker build -t sportstournament-img .
-docker run -itd --name sportstournament-cont -p 8080:3000 sportstournament-img
+docker run -itd --name sportstournament-cont -p 7614:3000 sportstournament-img
 ```
 
 > Replace `3000` with the actual port your `app.js` listens on if it differs.
@@ -279,7 +279,7 @@ CMD ["python", "app.py"]
 ```bash
 cd careersportal-python
 docker build -t careersportal-python-img .
-docker run -itd --name careersportal-python-cont -p 5000:5000 careersportal-python-img
+docker run -itd --name careersportal-python-cont -p 5454:5000 careersportal-python-img
 ```
 
 **Preview:**
