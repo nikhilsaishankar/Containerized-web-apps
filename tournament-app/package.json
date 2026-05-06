@@ -1,0 +1,13 @@
+{
+  "name": "sports-tournament-app",
+  "version": "1.0.0",
+  "description": "Sports Tournament Manager",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
